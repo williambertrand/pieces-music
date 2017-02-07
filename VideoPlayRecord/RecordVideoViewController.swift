@@ -123,14 +123,6 @@ class RecordVideoViewController: UIViewController {
             
             if task.result != nil {
                 DispatchQueue.main.async(execute: { () -> Void in
-//                    if let index = self.indexOfUploadRequest(self.uploadRequests, uploadRequest: uploadRequest) {
-//                        self.uploadRequests[index] = nil
-//                        self.uploadFileURLs[index] = uploadRequest.body
-//
-//                        let indexPath = IndexPath(row: index, section: 0)
-//                        self.collectionView.reloadItems(at: [indexPath])
-//                    }
-                    
                     let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 200));
                     label.textAlignment = .center;
                     label.text = "Upload completed";

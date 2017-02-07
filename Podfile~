@@ -7,6 +7,7 @@ target 'VideoPlayRecord' do
 
   # Pods for VideoPlayRecord
   pod 'AWSS3'
+  pod 'AWSCore'
   target 'VideoPlayRecordTests' do
     inherit! :search_paths
     # Pods for testing

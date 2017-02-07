@@ -19,8 +19,8 @@ class TestDownloadViewController : UIViewController {
         super.viewDidLoad()
         
         // Hard-coded names for the tutorial bucket and the file uploaded at the beginning
-        let s3BucketName = "pieces-bucket"
-        let fileName = "test.jpg"
+        let s3BucketName = "pieces-staging-bucket"
+        let fileName = "filter.png"
         
         let downloadFilePath = NSTemporaryDirectory().appending(fileName);
         //let downloadFilePath = NSTemporaryDirectory().stringByAppendingPathComponent(fileName)

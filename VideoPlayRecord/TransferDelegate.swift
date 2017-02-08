@@ -14,18 +14,26 @@ import Alamofire
 
 class TransferDelegate {
     
+    var user_id : String! //TODO
+    let piecesDBURL = "https://afternoon-cliffs-21515.herokuapp.com/pieces"
+    
     //TODO have one transfer delegate object for each bucket ideally or have it do uploads to multiple buckets?
     var transferBucketName : String!
     
     
-    func testUploadPiece(){
-        //todo: add alamofire
+    //TODO get a name for a piece file name
+    func getPieceName(userID:String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd-HH:mm:ss"
+        let fileName = ProcessInfo.processInfo.globallyUniqueString
+        let index = fileName.index(fileName.startIndex, offsetBy: 36);
+        let retFileName = fileName.substring(from: index) + "-\(formatter.string(from: Date()))-\(userID).mp4"
+        return retFileName;
     }
-    
     
     func uploadToAws(videoPath: NSString, bucketName: String){
         self.transferBucketName = bucketName
-        let fileName = ProcessInfo.processInfo.globallyUniqueString + ".mp4" //TODO
+        let fileName = getPieceName(userID: self.user_id);
         print("---------- now processing upload ----------")
         let fileURL = URL(fileURLWithPath: (videoPath as String));
         print(fileURL)
@@ -36,7 +44,8 @@ class TransferDelegate {
         uploadRequest?.bucket = bucketName;
         self.upload(uploadRequest!);
         
-        
+        //add piece to the rails backend DB
+        self.uploadPieceInfoItem(title: "title-TODO", description: "desc-TODO", song: "song-TODO", userID: self.user_id, fileName: fileName, bucketName: bucketName)
         
     }
     
@@ -78,6 +87,31 @@ class TransferDelegate {
             }
             return nil
         })
+    }
+    
+    /*
+ 
+     Piece DB Fields:
+     
+     Title
+     Description
+     Song
+     user
+     file_name
+     bucket
+ 
+     */
+    
+    func uploadPieceInfoItem(title:String, description: String, song: String, userID:String, fileName:String, bucketName: String){
+        
+        let params = ["title":title, "description":description, "song":song, "user":userID, "file_name":fileName, "bucket":bucketName];
+        let result = Alamofire.request(piecesDBURL, method: .post, parameters: params, encoding: JSONEncoding.default, headers: ["content-type":"application/json"])
+        
+        print(result)
+    }
+    
+    func testUploadPiece(){
+        uploadPieceInfoItem(title: "testFromNewApp", description: "this is from the new app", song: "Charlie XCX", userID: "testing", fileName: "testFile", bucketName: "pieces-staging-bucket22");
     }
 
     

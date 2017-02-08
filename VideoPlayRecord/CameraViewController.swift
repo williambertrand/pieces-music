@@ -37,6 +37,7 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         transferDelegate = TransferDelegate()
+        transferDelegate.user_id = "testUser1000";
         // Do any additional setup after loading the view.
         //self.addRecordButton(width: self.view.frame.width, height: self.view.frame.height);
         self.setupCapture()
@@ -127,12 +128,9 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
     func getVideoDeviceWithPosition(_ position:AVCaptureDevicePosition) -> AVCaptureDevice! {
         
         let devices : [AVCaptureDevice] = AVCaptureDevice.devices() as! [AVCaptureDevice]
-        print(devices)
-        print("   ")
         for device in devices {
             if device.hasMediaType(AVMediaTypeVideo){
                 if device.position == position {
-                    print("Found device at position: \(device.position)")
                     self.captureDevice = device;
                     return device
                 }

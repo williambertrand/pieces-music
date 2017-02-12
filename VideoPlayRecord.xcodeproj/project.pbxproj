@@ -15,6 +15,7 @@
 		3D522EC11DD8F896004BD446 /* TestWatchVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D522EC01DD8F896004BD446 /* TestWatchVideoViewController.swift */; };
 		3D5B97271E43765E00068319 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5B97261E43765E00068319 /* CameraViewController.swift */; };
 		3D5B97291E43769800068319 /* TransferDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5B97281E43769800068319 /* TransferDelegate.swift */; };
+		3DAD1C8B1E4D619800AE9F0C /* FeedViewV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAD1C8A1E4D619800AE9F0C /* FeedViewV1.swift */; };
 		84CD750A1A7D35A000A6DB54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD75091A7D35A000A6DB54 /* AppDelegate.swift */; };
 		84CD750C1A7D35A000A6DB54 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD750B1A7D35A000A6DB54 /* ViewController.swift */; };
 		84CD750F1A7D35A000A6DB54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84CD750D1A7D35A000A6DB54 /* Main.storyboard */; };
@@ -47,6 +48,7 @@
 		3D522EC01DD8F896004BD446 /* TestWatchVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestWatchVideoViewController.swift; sourceTree = "<group>"; };
 		3D5B97261E43765E00068319 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		3D5B97281E43769800068319 /* TransferDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferDelegate.swift; sourceTree = "<group>"; };
+		3DAD1C8A1E4D619800AE9F0C /* FeedViewV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewV1.swift; sourceTree = "<group>"; };
 		542C910C184D96E31759CF84 /* Pods-VideoPlayRecord.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayRecord.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VideoPlayRecord/Pods-VideoPlayRecord.debug.xcconfig"; sourceTree = "<group>"; };
 		84CD75041A7D35A000A6DB54 /* VideoPlayRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoPlayRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84CD75081A7D35A000A6DB54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				84CD752B1A7E6D7E00A6DB54 /* RecordVideoViewController.swift */,
 				3D5B97261E43765E00068319 /* CameraViewController.swift */,
 				3D5B97281E43769800068319 /* TransferDelegate.swift */,
+				3DAD1C8A1E4D619800AE9F0C /* FeedViewV1.swift */,
 				3D522EB81DD83301004BD446 /* TestDownloadViewController.swift */,
 				84CD752D1A7E6D8F00A6DB54 /* MergeVideoViewController.swift */,
 				84CD750D1A7D35A000A6DB54 /* Main.storyboard */,
@@ -388,6 +391,7 @@
 				84CD750A1A7D35A000A6DB54 /* AppDelegate.swift in Sources */,
 				3D522EBB1DD83E8A004BD446 /* WatchVideoViewController.swift in Sources */,
 				84CD752A1A7E6D2D00A6DB54 /* PlayVideoViewController.swift in Sources */,
+				3DAD1C8B1E4D619800AE9F0C /* FeedViewV1.swift in Sources */,
 				84CD752C1A7E6D7E00A6DB54 /* RecordVideoViewController.swift in Sources */,
 				3D522EC11DD8F896004BD446 /* TestWatchVideoViewController.swift in Sources */,
 				3D522EBD1DD83F00004BD446 /* constants.swift in Sources */,

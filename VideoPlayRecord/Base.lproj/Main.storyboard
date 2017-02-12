@@ -23,22 +23,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s0J-pr-GUV">
-                                <rect key="frame" x="121" y="543" width="134" height="29"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s0J-pr-GUV">
+                                <rect key="frame" x="66" y="534" width="242" height="47"/>
                                 <color key="backgroundColor" red="0.90183245732739592" green="0.55932932711193106" blue="1" alpha="0.84294084821428572" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
-                                <state key="normal" title="Start">
+                                <state key="normal" title="Record">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <segue destination="AW6-Qf-ATx" kind="show" id="kDG-gy-PXW"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Evf-KB-62i">
+                                <rect key="frame" x="66" y="472" width="242" height="47"/>
+                                <color key="backgroundColor" red="0.39652100233629517" green="0.84321334407348347" blue="1" alpha="0.84294084820000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
+                                <state key="normal" title="Watch">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="pvm-dh-Kzb" kind="show" id="ySq-Da-noq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="s0J-pr-GUV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="105" id="MeL-ur-eyn"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="s0J-pr-GUV" secondAttribute="bottom" constant="95" id="tQC-02-Gg2"/>
+                            <constraint firstItem="s0J-pr-GUV" firstAttribute="top" secondItem="Evf-KB-62i" secondAttribute="bottom" constant="15" id="DsC-Md-hvG"/>
+                            <constraint firstItem="s0J-pr-GUV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="50" id="MeL-ur-eyn"/>
+                            <constraint firstItem="Evf-KB-62i" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ddE-vN-thZ"/>
+                            <constraint firstItem="Evf-KB-62i" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="50" id="gGv-aD-Mp6"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="s0J-pr-GUV" secondAttribute="bottom" constant="86" id="tQC-02-Gg2"/>
                             <constraint firstItem="s0J-pr-GUV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yXt-HX-rtG"/>
                         </constraints>
                     </view>
@@ -47,6 +61,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1021.6" y="386.35682158920542"/>
+        </scene>
+        <!--Feed ViewV1-->
+        <scene sceneID="2Se-Ul-YO5">
+            <objects>
+                <viewController id="pvm-dh-Kzb" customClass="FeedViewV1" customModule="VideoPlayRecord" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0Yr-Ha-o7q"/>
+                        <viewControllerLayoutGuide type="bottom" id="p9o-BB-nRo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="EQj-Pf-5lm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Pieces" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMN-cE-L3T">
+                                <rect key="frame" x="166" y="80" width="88" height="30"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vMN-cE-L3T" firstAttribute="top" secondItem="0Yr-Ha-o7q" secondAttribute="bottom" constant="16" id="Cmr-Kv-pY4"/>
+                            <constraint firstItem="vMN-cE-L3T" firstAttribute="centerX" secondItem="EQj-Pf-5lm" secondAttribute="centerX" id="Ebm-cx-y49"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L3U-RR-73B" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1757.5999999999999" y="384.55772113943033"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="JrK-6m-Boy">
@@ -92,7 +136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="but-Q7-tA1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1740" y="385.45727136431788"/>
+            <point key="canvasLocation" x="1758" y="1148"/>
         </scene>
         <!--Test Download View Controller-->
         <scene sceneID="Ksr-3t-5LW">
@@ -107,7 +151,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="che-6o-47A">
-                                <rect key="frame" x="69" y="105" width="238" height="264"/>
+                                <rect key="frame" x="69" y="61" width="238" height="264"/>
                                 <color key="backgroundColor" red="0.25098039220000001" green="0.52941176469999995" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="che-6o-47A" secondAttribute="height" multiplier="119:132" id="86W-1l-n8b"/>
@@ -260,7 +304,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="db6-Gf-3WR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="832.79999999999995" y="1107.7961019490256"/>
+            <point key="canvasLocation" x="809" y="1863"/>
         </scene>
         <!--Merge Video View Controller-->
         <scene sceneID="AH5-cj-azu">
@@ -334,7 +378,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ns9-cK-sAi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1741" y="1329"/>
+            <point key="canvasLocation" x="1740" y="1925"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HnJ-FY-Mu6">
@@ -352,7 +396,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J0Z-nE-aks" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="343" y="387"/>
+            <point key="canvasLocation" x="156" y="386"/>
         </scene>
     </scenes>
 </document>

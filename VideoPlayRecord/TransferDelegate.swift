@@ -12,13 +12,38 @@ import AWSS3
 import Alamofire
 
 
+
+class PieceObj : NSObject {
+    var title : String!
+    var fileName : String!
+    var s3Bucket : String!
+    
+    
+    /* Takes dictionary with fields : title, file_name, bucket, as arguments */
+    init(dict : NSDictionary) {
+        self.title = dict["title"] as! String
+        self.fileName = dict["file_name"] as! String
+        self.s3Bucket = dict["bucket"] as! String
+    }
+}
+
+protocol TransferDelegateViewController {
+    func appendToDownloadedItems(filePath: String)
+}
+
+
 class TransferDelegate {
     
     var user_id : String! //TODO
     let piecesDBURL = "https://afternoon-cliffs-21515.herokuapp.com/pieces"
     
+    
+    let allPiecesUrl = "https://afternoon-cliffs-21515.herokuapp.com/pieces/sendtest"
+    
     //TODO have one transfer delegate object for each bucket ideally or have it do uploads to multiple buckets?
     var transferBucketName : String!
+    
+    var delegate : TransferDelegateViewController!
     
     
     //TODO get a name for a piece file name
@@ -113,6 +138,105 @@ class TransferDelegate {
     func testUploadPiece(){
         uploadPieceInfoItem(title: "testFromNewApp", description: "this is from the new app", song: "Charlie XCX", userID: "testing", fileName: "testFile", bucketName: "pieces-staging-bucket22");
     }
+    
+    func getAllPieces() {
+        Alamofire.request(allPiecesUrl)
+            .responseJSON { response in
+                // print response as string for debugging, testing, etc.
+                if (response.result.error != nil){
+                    
+                }
+                else {
+                    if let result = response.result.value as! NSArray? {
+                        for element in result {
+                            let data = element as! NSDictionary
+                            let obj = PieceObj(dict: data);
+                            self.downloadPieceFromAwsBucket(piece: obj);
+                            
+                        }
+                    }
+                    else{
+                        print("ERROR could not complete conversion from response to array")
+                    }
+                    
+                }
+                
+                
+        }
+    
+        
+    }
+    
+    
+    func downloadPieceFromAwsBucket(piece: PieceObj){
+        let transferManager = AWSS3TransferManager.default()
+        
+        let fileName : String = piece.fileName!;
+        let s3BucketName : String = piece.s3Bucket!;
+        
+        let downloadFilePath = NSTemporaryDirectory().appending(fileName);
+        //get the url next
+        let downloadingFileURL = NSURL.fileURL(withPath: downloadFilePath)
+        
+        //create the download request
+        let downloadRequest = AWSS3TransferManagerDownloadRequest()
+        downloadRequest?.bucket = s3BucketName
+        downloadRequest?.key  = fileName
+        downloadRequest?.downloadingFileURL = downloadingFileURL
+        
+        transferManager?.download(downloadRequest).continue ({
+            (task: AWSTask!) -> AnyObject! in
+            if task.error != nil {
+                print("Error downloading \(task.debugDescription)")
+                print(task.error?.localizedDescription)
+            }
+            else {
+                //process finished download -> add feed item
+                //append
+                self.delegate.appendToDownloadedItems(filePath: "\(downloadRequest?.downloadingFileURL)");
+            }
+            
+            return nil
+        }) // end closure
+        
+    }
+    
+    
+    func downloadPieceFilesFromAwsBucket(fileNames : [String], s3BucketName: String){
+        //TODO make sure its ok to only use 1 instance of a transfermanager
+        let transferManager = AWSS3TransferManager.default()
+        for fileName in fileNames {
+            //get path for the downloaded video file
+            let downloadFilePath = NSTemporaryDirectory().appending(fileName);
+            //get the url next
+            let downloadingFileURL = NSURL.fileURL(withPath: downloadFilePath)
+            
+            //create the download request
+            let downloadRequest = AWSS3TransferManagerDownloadRequest()
+            downloadRequest?.bucket = s3BucketName
+            downloadRequest?.key  = fileName
+            downloadRequest?.downloadingFileURL = downloadingFileURL
+            
+            transferManager?.download(downloadRequest).continue ({
+                (task: AWSTask!) -> AnyObject! in
+                if task.error != nil {
+                    print("Error downloading \(task.debugDescription)")
+                    print(task.error?.localizedDescription)
+                }
+                else {
+                    //process finished download -> add feed item
+                    //append
+                    self.delegate.appendToDownloadedItems(filePath: "\(downloadRequest?.downloadingFileURL)");
+                }
+                
+                return nil
+            }) // end closure
+            
+        }
+    }
+    
+    
+    
 
     
     

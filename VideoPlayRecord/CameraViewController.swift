@@ -11,7 +11,7 @@ import UIKit
 import AVFoundation
 import AssetsLibrary
 
-class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDelegate {
+class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDelegate, TransferDelegateViewController {
     
     var captureSession : AVCaptureSession? = nil
     var captureDevice : AVCaptureDevice? = nil
@@ -22,6 +22,8 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
     
     
     var record_button : UIButton!
+    
+    var record_label : UILabel!
     
     var fileUrl : URL? = nil
     var finalVideoURL : URL? = nil
@@ -37,6 +39,7 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         transferDelegate = TransferDelegate()
+        transferDelegate.delegate = self
         transferDelegate.user_id = "testUser1000";
         // Do any additional setup after loading the view.
         //self.addRecordButton(width: self.view.frame.width, height: self.view.frame.height);
@@ -49,6 +52,18 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
         record_button.setImage(UIImage(named:"recordIcon"), for: [])
         record_button.imageView?.contentMode = .scaleAspectFit
         self.view.addSubview(record_button);
+    }
+    
+    func addRecordLabel(width: CGFloat, height: CGFloat){
+        let recLabelFrame = CGRect(x: width * 0.1, y: height * 0.85, width: width * 0.8, height: height * 0.15);
+        record_label = UILabel(frame: recLabelFrame);
+        record_label.text = "Tap To Record"
+        record_label.textColor = UIColor.white
+        record_label.font = UIFont(name: "Avenir", size: 20);
+        record_label.contentMode = .center
+        self.view.addSubview(record_label);
+        
+        
     }
     
     func setupCapture(){
@@ -84,6 +99,8 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
         self.captureVideoPreviewLayer?.frame = cameraView.frame
         self.captureVideoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
         cameraView.layer.addSublayer(self.captureVideoPreviewLayer!)
+        
+        self.addRecordLabel(width: self.view.frame.width, height: self.view.frame.height)
         self.captureSession?.startRunning()
         
         
@@ -160,6 +177,10 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
         return fileSize
     }
     
+    func appendToDownloadedItems(filePath: String) {
+        //Implement when needed
+    }
+    
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -180,17 +201,17 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
         } else {
             self.captureMovieFileOutput?.stopRecording()
             self.navigationController?.setNavigationBarHidden(false, animated: true)
-            
+            self.is_recording = false
         }
         updateLabel();
     }
     
     func updateLabel(){
         if is_recording == true{
-            self.recordLabel.text = "recording...."
+            self.record_label.text = "recording...."
         }
         else {
-            self.recordLabel.text = "Tap to Record"
+            self.record_label.text = "Tap to Record"
         }
     }
     

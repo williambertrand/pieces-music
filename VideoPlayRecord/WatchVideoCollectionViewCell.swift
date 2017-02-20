@@ -16,6 +16,8 @@ class WatchVideoCollectionViewCell: UICollectionViewCell {
     var player : AVPlayer!
     var avLayer : AVPlayerLayer!
     
+    var isPlaying: Bool = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -31,19 +33,27 @@ class WatchVideoCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func playVideo(downloadFilePath: String){
+    func displayVideo(downloadFilePath: String){
         textLabel.text = "\(downloadFilePath)";
         print("playvideo: \(downloadFilePath)");
         
-        let player = AVPlayer(url: NSURL(fileURLWithPath: downloadFilePath) as URL);
+        self.player = AVPlayer(url: NSURL(fileURLWithPath: downloadFilePath) as URL);
         let avPlayerLayer = AVPlayerLayer(player: player);
         avPlayerLayer.frame = self.contentView.frame;
         self.contentView.layer.insertSublayer(avPlayerLayer, at: 0);
         
         //player.play()
-        
-        
-        
+    }
+    
+    func playVideo(){
+        if isPlaying == false {
+            player.play()
+            self.isPlaying = true
+        }
+        else {
+            player.pause()
+            self.isPlaying = false
+        }
     }
     
 }

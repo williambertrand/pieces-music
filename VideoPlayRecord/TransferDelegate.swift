@@ -188,12 +188,13 @@ class TransferDelegate {
             (task: AWSTask!) -> AnyObject! in
             if task.error != nil {
                 print("Error downloading \(task.debugDescription)")
-                print(task.error?.localizedDescription)
+                print(task.error?.localizedDescription);
             }
             else {
                 //process finished download -> add feed item
                 //append
-                self.delegate.appendToDownloadedItems(filePath: "\(downloadRequest?.downloadingFileURL)");
+                let s: String = (downloadRequest?.downloadingFileURL.path)!;
+                self.delegate.appendToDownloadedItems(filePath: s);
             }
             
             return nil

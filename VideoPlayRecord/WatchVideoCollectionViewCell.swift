@@ -18,6 +18,8 @@ class WatchVideoCollectionViewCell: UICollectionViewCell {
     
     var isPlaying: Bool = false
     
+    var instantiated: Bool = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -34,18 +36,25 @@ class WatchVideoCollectionViewCell: UICollectionViewCell {
     }
     
     func displayVideo(downloadFilePath: String){
-        textLabel.text = "\(downloadFilePath)";
-        print("playvideo: \(downloadFilePath)");
-        
+        if (instantiated == true) {
+            self.player = nil
+            if self.contentView.layer.sublayers?.count != 0 {
+                print("clearing sublayers");
+                for l in (self.contentView.layer.sublayers)! {
+                    l.removeFromSuperlayer()
+                }
+            }
+        }
         self.player = AVPlayer(url: NSURL(fileURLWithPath: downloadFilePath) as URL);
         let avPlayerLayer = AVPlayerLayer(player: player);
         avPlayerLayer.frame = self.contentView.frame;
         self.contentView.layer.insertSublayer(avPlayerLayer, at: 0);
-        
+        self.instantiated = true
         //player.play()
     }
     
     func playVideo(){
+        print("play video called");
         if isPlaying == false {
             player.play()
             self.isPlaying = true

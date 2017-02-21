@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		266378BFCAE6BAA658811C04 /* Pods_VideoPlayRecordTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA5263109A0FEA9968731FA0 /* Pods_VideoPlayRecordTests.framework */; };
+		3D3283661E5C96A100304332 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D3283651E5C96A100304332 /* GoogleService-Info.plist */; };
 		3D522EB91DD83301004BD446 /* TestDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D522EB81DD83301004BD446 /* TestDownloadViewController.swift */; };
 		3D522EBB1DD83E8A004BD446 /* WatchVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D522EBA1DD83E8A004BD446 /* WatchVideoViewController.swift */; };
 		3D522EBD1DD83F00004BD446 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D522EBC1DD83F00004BD446 /* constants.swift */; };
@@ -41,6 +42,8 @@
 /* Begin PBXFileReference section */
 		2228A30CE27DFE2D4EEE69B8 /* Pods_VideoPlayRecord.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoPlayRecord.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C2434D695EB846F374B51FB /* Pods-VideoPlayRecordTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayRecordTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VideoPlayRecordTests/Pods-VideoPlayRecordTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3D3283651E5C96A100304332 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3D3283671E5C994A00304332 /* VideoPlayRecord.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VideoPlayRecord.entitlements; sourceTree = "<group>"; };
 		3D522EB81DD83301004BD446 /* TestDownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDownloadViewController.swift; sourceTree = "<group>"; };
 		3D522EBA1DD83E8A004BD446 /* WatchVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchVideoViewController.swift; sourceTree = "<group>"; };
 		3D522EBC1DD83F00004BD446 /* constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -131,6 +134,7 @@
 		84CD75061A7D35A000A6DB54 /* VideoPlayRecord */ = {
 			isa = PBXGroup;
 			children = (
+				3D3283671E5C994A00304332 /* VideoPlayRecord.entitlements */,
 				84CD75091A7D35A000A6DB54 /* AppDelegate.swift */,
 				84CD750B1A7D35A000A6DB54 /* ViewController.swift */,
 				84CD75291A7E6D2D00A6DB54 /* PlayVideoViewController.swift */,
@@ -154,6 +158,7 @@
 		84CD75071A7D35A000A6DB54 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3D3283651E5C96A100304332 /* GoogleService-Info.plist */,
 				84CD75121A7D35A000A6DB54 /* LaunchScreen.xib */,
 				84CD75081A7D35A000A6DB54 /* Info.plist */,
 			);
@@ -237,6 +242,11 @@
 						DevelopmentTeam = DR2A8R9XF3;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					84CD75181A7D35A000A6DB54 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -270,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84CD750F1A7D35A000A6DB54 /* Main.storyboard in Resources */,
+				3D3283661E5C96A100304332 /* GoogleService-Info.plist in Resources */,
 				84CD75141A7D35A000A6DB54 /* LaunchScreen.xib in Resources */,
 				84CD75111A7D35A000A6DB54 /* Images.xcassets in Resources */,
 			);
@@ -523,6 +534,7 @@
 			baseConfigurationReference = 542C910C184D96E31759CF84 /* Pods-VideoPlayRecord.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = VideoPlayRecord/VideoPlayRecord.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = DR2A8R9XF3;
 				INFOPLIST_FILE = VideoPlayRecord/Info.plist;
@@ -538,6 +550,7 @@
 			baseConfigurationReference = EC6A7A20BAAAC6154D6A2ED6 /* Pods-VideoPlayRecord.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = VideoPlayRecord/VideoPlayRecord.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = DR2A8R9XF3;
 				INFOPLIST_FILE = VideoPlayRecord/Info.plist;

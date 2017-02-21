@@ -9,6 +9,7 @@
 import UIKit
 import AWSCore
 import AWSS3
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let configuration = AWSServiceConfiguration(region: .usWest2, credentialsProvider: credentialProvider)
         //AWSS3.register(with: configuration!, forKey: "USWest2S3");
         AWSServiceManager.default().defaultServiceConfiguration = configuration
-        
+        FIRApp.configure();
         return true
     }
 

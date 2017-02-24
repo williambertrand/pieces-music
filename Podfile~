@@ -9,6 +9,8 @@ target 'VideoPlayRecord' do
   pod 'AWSS3'
   pod 'AWSCore'
   pod 'Alamofire'
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
   target 'VideoPlayRecordTests' do
     inherit! :search_paths
     # Pods for testing

@@ -105,6 +105,3 @@ fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
 fi
-if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
-  wait
-fi

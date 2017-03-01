@@ -3,7 +3,7 @@
 //  VideoPlayRecord
 //
 //  Created by Andy (Test) on 1/31/15.
-//  Copyright (c) 2015 Ray Wenderlich. All rights reserved.
+//  Copyright (c) 2015 Will Bert. All rights reserved.
 //
 
 import UIKit
@@ -25,7 +25,8 @@ class ViewController: UIViewController {
     
     //let usersRef = FIRDatabase.database().reference(withPath: "online")
     
-    
+    var spotifyLoggin = true //TODO
+    var SPTUserLabel : UILabel!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
@@ -46,7 +47,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        let width = self.view.frame.width;
+        let height = self.view.frame.height;
         //see if user is authenticated or not TODO
         if FIRAuth.auth()!.currentUser != nil {
             Current_User = User(authData: FIRAuth.auth()!.currentUser!);
@@ -79,6 +81,32 @@ class ViewController: UIViewController {
                 }
             }
         }
+        
+        if spotifyLoggin == true {
+            //self.addSpotifyView(width:width, height: height);
+        }
+        
+        //DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            //self.SPTUserLabel.text = Spotify_Auth.session.canonicalUsername;
+        //}
+        
+    }
+    
+    func addSpotifyView(width: CGFloat, height: CGFloat){
+        let logoFrame = CGRect(x: width * 0.8, y: height * 0.9, width: width * 0.075, height: height * 0.075);
+        let logoView = UIImageView(frame: logoFrame)
+        logoView.image = UIImage(named: "spotify-1");
+        logoView.contentMode = .scaleAspectFit;
+        
+        let labelFrame = CGRect(x: width * 0.875, y: height * 0.9, width: width * 0.2, height: height * 0.08);
+        SPTUserLabel = UILabel(frame: labelFrame);
+        SPTUserLabel.font = UIFont(name: "Helvetica", size: 8);
+        SPTUserLabel.text = "Logged in";
+        SPTUserLabel.textAlignment = .left;
+        SPTUserLabel.contentMode = .left;
+        
+        self.view.addSubview(logoView);
+        self.view.addSubview(SPTUserLabel);
         
     }
     

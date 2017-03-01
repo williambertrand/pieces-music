@@ -3,7 +3,7 @@
 //  VideoPlayRecord
 //
 //  Created by William Bertrand on 11/13/16.
-//  Copyright © 2016 Ray Wenderlich. All rights reserved.
+//  Copyright © 2016 Will Bert. All rights reserved.
 //
 
 import Foundation
@@ -62,7 +62,7 @@ class WatchVideoViewController : UIViewController, UICollectionViewDelegate, UIC
         let listObjectsRequest = AWSS3ListObjectsRequest()
         listObjectsRequest?.bucket = S3BucketName
         
-        s3.listObjects(listObjectsRequest!).continue({ (task) -> AnyObject! in
+        s3.listObjects(listObjectsRequest!).continueWith(block: { (task) -> AnyObject! in
             
             if let error = task.error {
                 print("listObjects failed with error: [\(error)]")
@@ -89,12 +89,12 @@ class WatchVideoViewController : UIViewController, UICollectionViewDelegate, UIC
         let listObjectsRequest = AWSS3ListObjectsRequest()
         listObjectsRequest?.bucket = S3BucketName
         
-        s3.listObjects(listObjectsRequest!).continue({ (task) -> AnyObject! in
+        s3.listObjects(listObjectsRequest!).continueWith(block: { (task) -> AnyObject! in
             
             if let error = task.error {
                 print("listObjects failed with error: [\(error)]")
             }
-            if let exception = task.exception {
+            if let exception = task.error {
                 print("listObjects failed with exception: [\(exception)]")
             }
             if let listObjectsOutput = task.result as AWSS3ListObjectsOutput? {
@@ -122,7 +122,7 @@ class WatchVideoViewController : UIViewController, UICollectionViewDelegate, UIC
                         downloadRequest?.downloadingFileURL = downloadingFileURL
                         
                         let transferManager = AWSS3TransferManager.default()
-                        transferManager?.download(downloadRequest).continue ({
+                        transferManager.download(downloadRequest!).continueWith(block: {
                             (task: AWSTask!) -> AnyObject! in
                             if task.error != nil {
                                 print("Error downloading")
@@ -167,7 +167,7 @@ class WatchVideoViewController : UIViewController, UICollectionViewDelegate, UIC
             downloadRequest?.downloadingFileURL = downloadingFileURL
             
             let transferManager = AWSS3TransferManager.default()
-            transferManager?.download(downloadRequest).continue ({
+            transferManager.download(downloadRequest!).continueWith(block: {
                 (task: AWSTask!) -> AnyObject! in
                 if task.error != nil {
                     print("Error downloading")
@@ -190,7 +190,7 @@ class WatchVideoViewController : UIViewController, UICollectionViewDelegate, UIC
         switch (downloadRequest.state) {
         case .notStarted, .paused:
             let transferManager = AWSS3TransferManager.default()
-            transferManager?.download(downloadRequest).continue({ (task) -> AnyObject! in
+            transferManager.download(downloadRequest).continueWith(block: { (task) -> AnyObject! in
                 if let error = task.error {
                     if error._domain == AWSS3TransferManagerErrorDomain as String
                         && AWSS3TransferManagerErrorType(rawValue: error._code) == AWSS3TransferManagerErrorType.paused {
@@ -198,7 +198,7 @@ class WatchVideoViewController : UIViewController, UICollectionViewDelegate, UIC
                     } else {
                         print("download failed: [\(error)]")
                     }
-                } else if let exception = task.exception {
+                } else if let exception = task.error {
                     print("download failed: [\(exception)]")
                 } else {
                     DispatchQueue.main.async(execute: { () -> Void in

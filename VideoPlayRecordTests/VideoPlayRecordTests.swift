@@ -3,11 +3,12 @@
 //  VideoPlayRecordTests
 //
 //  Created by Andy (Test) on 1/31/15.
-//  Copyright (c) 2015 Ray Wenderlich. All rights reserved.
+//  Copyright (c) 2015 Will Bert. All rights reserved.
 //
 
 import UIKit
 import XCTest
+@testable import VideoPlayRecord
 
 class VideoPlayRecordTests: XCTestCase {
     

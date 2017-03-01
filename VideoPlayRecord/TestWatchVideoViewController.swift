@@ -3,7 +3,7 @@
 //  VideoPlayRecord
 //
 //  Created by William Bertrand on 11/13/16.
-//  Copyright © 2016 Ray Wenderlich. All rights reserved.
+//  Copyright © 2016 Will Bert. All rights reserved.
 //
 
 import UIKit
@@ -42,7 +42,7 @@ class TestWatchVideoViewController: UIViewController {
         
         //block in .continue only run after task completes
         
-        transferManager?.download(downloadRequest).continue ({
+        transferManager.download(downloadRequest!).continueWith(block: {
             (task: AWSTask!) -> AnyObject! in
             if task.error != nil {
                 print("Error downloading")

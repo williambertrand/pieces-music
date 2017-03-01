@@ -83,15 +83,29 @@
                                     <action selector="logoutPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ca3-ui-Zld"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t8J-iz-Ys6">
+                                <rect key="frame" x="66" y="410" width="242" height="47"/>
+                                <color key="backgroundColor" red="0.43829786260050169" green="0.91909462460582114" blue="0.48054724860739323" alpha="0.66750110035211263" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
+                                <state key="normal" title="Search">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="GZU-sr-PKG" kind="show" id="RQU-Ec-Is0"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Evf-KB-62i" firstAttribute="top" secondItem="t8J-iz-Ys6" secondAttribute="bottom" constant="15" id="CTi-yC-tJi"/>
                             <constraint firstItem="s0J-pr-GUV" firstAttribute="top" secondItem="Evf-KB-62i" secondAttribute="bottom" constant="15" id="DsC-Md-hvG"/>
                             <constraint firstItem="s0J-pr-GUV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="50" id="MeL-ur-eyn"/>
+                            <constraint firstItem="t8J-iz-Ys6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QIP-ce-ul5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="CCn-1I-wfn" secondAttribute="trailing" constant="51" id="Spr-RS-VJy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2dX-Cs-u62" secondAttribute="trailing" id="Sqm-la-hF9"/>
                             <constraint firstItem="ytX-RE-4BG" firstAttribute="top" secondItem="CCn-1I-wfn" secondAttribute="bottom" constant="16" id="SzN-Mv-CEz"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="6a1-nE-i3b" secondAttribute="bottom" constant="10" id="bBH-2b-gbF"/>
+                            <constraint firstItem="t8J-iz-Ys6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="50" id="cpK-qa-Jiv"/>
                             <constraint firstItem="Evf-KB-62i" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ddE-vN-thZ"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="2dX-Cs-u62" secondAttribute="bottom" constant="14" id="fs1-kn-osK"/>
                             <constraint firstItem="Evf-KB-62i" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="50" id="gGv-aD-Mp6"/>
@@ -100,6 +114,7 @@
                             <constraint firstItem="CCn-1I-wfn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="50" id="pPZ-33-ewQ"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="s0J-pr-GUV" secondAttribute="bottom" constant="86" id="tQC-02-Gg2"/>
                             <constraint firstAttribute="leadingMargin" secondItem="2dX-Cs-u62" secondAttribute="leading" id="uTV-3U-Aw9"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="t8J-iz-Ys6" secondAttribute="trailing" constant="51" id="uxc-nM-U2r"/>
                             <constraint firstItem="s0J-pr-GUV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yXt-HX-rtG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6a1-nE-i3b" secondAttribute="trailing" id="zRH-dZ-wBH"/>
                         </constraints>
@@ -146,7 +161,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L3U-RR-73B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2281" y="385"/>
+            <point key="canvasLocation" x="1740" y="386"/>
         </scene>
         <!--Login Signup View Controller-->
         <scene sceneID="bWY-jp-a4X">
@@ -310,7 +325,48 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="but-Q7-tA1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2282" y="1176"/>
+            <point key="canvasLocation" x="1740" y="1165"/>
+        </scene>
+        <!--Song Select View Controller-->
+        <scene sceneID="nDW-F5-NBp">
+            <objects>
+                <viewController id="GZU-sr-PKG" customClass="SongSelectViewController" customModule="VideoPlayRecord" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zCX-Xh-NTZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="O0I-ac-94B"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zXe-Tt-wXd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="9fy-pj-Qrk">
+                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9fy-pj-Qrk" firstAttribute="top" secondItem="zCX-Xh-NTZ" secondAttribute="bottom" id="25G-2M-uzC"/>
+                            <constraint firstItem="9fy-pj-Qrk" firstAttribute="centerX" secondItem="zXe-Tt-wXd" secondAttribute="centerX" id="Bom-yB-qGd"/>
+                            <constraint firstItem="9fy-pj-Qrk" firstAttribute="leading" secondItem="zXe-Tt-wXd" secondAttribute="leadingMargin" constant="-16" id="dNm-Du-4Xs"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="searchBar" destination="9fy-pj-Qrk" id="PNZ-Eu-9C5"/>
+                        <outlet property="searchDisplayController" destination="e8V-JL-H6P" id="2Ah-W6-HIV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Diq-TS-g4f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="e8V-JL-H6P">
+                    <connections>
+                        <outlet property="delegate" destination="GZU-sr-PKG" id="3OO-U9-pSQ"/>
+                        <outlet property="searchContentsController" destination="GZU-sr-PKG" id="y1T-31-Ecr"/>
+                        <outlet property="searchResultsDataSource" destination="GZU-sr-PKG" id="HEg-vX-gPs"/>
+                        <outlet property="searchResultsDelegate" destination="GZU-sr-PKG" id="bUw-AJ-xcx"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="2476" y="1163"/>
         </scene>
         <!--Test Download View Controller-->
         <scene sceneID="Ksr-3t-5LW">

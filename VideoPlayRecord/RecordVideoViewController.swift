@@ -94,7 +94,7 @@ class RecordVideoViewController: UIViewController {
         print("in upload request");
         let transferManager = AWSS3TransferManager.default()
         
-        transferManager?.upload(uploadRequest).continue( { (task) -> AnyObject! in
+        transferManager.upload(uploadRequest).continueWith(block: { (task) -> AnyObject! in
             if let error = task.error {
                 if error._domain == AWSS3TransferManagerErrorDomain as String {
                     if let errorCode = AWSS3TransferManagerErrorType(rawValue: error._code) {
@@ -117,7 +117,7 @@ class RecordVideoViewController: UIViewController {
                 }
             }
             
-            if let exception = task.exception {
+            if let exception = task.error {
                 print("upload() failed: [\(exception)]")
             }
             

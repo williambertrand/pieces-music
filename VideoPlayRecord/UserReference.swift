@@ -3,7 +3,7 @@
 //  VideoPlayRecord
 //
 //  Created by William Bertrand on 2/22/17.
-//  Copyright © 2017 Ray Wenderlich. All rights reserved.
+//  Copyright © 2017 Will Bert. All rights reserved.
 //
 
 import Foundation
@@ -29,3 +29,4 @@ struct User {
 
 
 var Current_User: User!
+var Spotify_Auth : SPTAuth!

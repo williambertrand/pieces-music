@@ -3,7 +3,7 @@
 //  VideoPlayRecord
 //
 //  Created by William Bertrand on 2/2/17.
-//  Copyright © 2017 Ray Wenderlich. All rights reserved.
+//  Copyright © 2017 Will Bert. All rights reserved.
 //
 
 import Foundation
@@ -161,6 +161,9 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
     
     func capture(_ captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAt outputFileURL: URL!, fromConnections connections: [Any]!, error: Error!) {
         self.compressRecordedVideo(url: outputFileURL);
+        
+        //perform segue to the song picker view
+        self.performSegue(withIdentifier: "FromCameraToSongPick", sender: self);
     }
     
     //TODO: move to utils file

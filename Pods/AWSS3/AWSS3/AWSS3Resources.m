@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -884,6 +884,7 @@
         \"\",\
         \"EU\",\
         \"eu-west-1\",\
+        \"eu-west-2\",\
         \"us-east-2\",\
         \"us-west-1\",\
         \"us-west-2\",\
@@ -895,7 +896,8 @@
         \"sa-east-1\",\
         \"cn-north-1\",\
         \"us-gov-west-1\",\
-        \"eu-central-1\"\
+        \"eu-central-1\",\
+        \"ca-central-1\"\
       ]\
     },\
     \"BucketLoggingStatus\":{\

@@ -3,7 +3,7 @@
 //  VideoPlayRecord
 //
 //  Created by William Bertrand on 2/2/17.
-//  Copyright © 2017 Ray Wenderlich. All rights reserved.
+//  Copyright © 2017 Will Bert. All rights reserved.
 //
 
 import Foundation
@@ -78,7 +78,7 @@ class TransferDelegate {
         print("in upload request");
         let transferManager = AWSS3TransferManager.default()
         
-        transferManager?.upload(uploadRequest).continue( { (task) -> AnyObject! in
+        transferManager.upload(uploadRequest).continueWith(block: { (task) -> AnyObject! in
             if let error = task.error {
                 if error._domain == AWSS3TransferManagerErrorDomain as String {
                     if let errorCode = AWSS3TransferManagerErrorType(rawValue: error._code) {
@@ -101,7 +101,7 @@ class TransferDelegate {
                 }
             }
             
-            if let exception = task.exception {
+            if let exception = task.error {
                 print("upload() failed: [\(exception)]")
             }
             
@@ -184,7 +184,7 @@ class TransferDelegate {
         downloadRequest?.key  = fileName
         downloadRequest?.downloadingFileURL = downloadingFileURL
         
-        transferManager?.download(downloadRequest).continue ({
+        transferManager.download(downloadRequest!).continueWith(block: {
             (task: AWSTask!) -> AnyObject! in
             if task.error != nil {
                 print("Error downloading \(task.debugDescription)")
@@ -218,7 +218,7 @@ class TransferDelegate {
             downloadRequest?.key  = fileName
             downloadRequest?.downloadingFileURL = downloadingFileURL
             
-            transferManager?.download(downloadRequest).continue ({
+            transferManager.download(downloadRequest!).continueWith(block: {
                 (task: AWSTask!) -> AnyObject! in
                 if task.error != nil {
                     print("Error downloading \(task.debugDescription)")

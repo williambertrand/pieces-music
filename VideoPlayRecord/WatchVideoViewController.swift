@@ -246,7 +246,7 @@ class WatchVideoViewController : UIViewController, UICollectionViewDelegate, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: watchCell, for: indexPath) as! WatchVideoCollectionViewCell;
-        cell.displayVideo(downloadFilePath: itemsDownloaded[indexPath.row]);
+        //cell.displayVideo(downloadFilePath: itemsDownloaded[indexPath.row]);
         return cell;
     }
     

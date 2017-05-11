@@ -8,7 +8,9 @@
 
 import Foundation
 import UIKit
+import Firebase
 let S3BucketName = "pieces-bucket";
+var NEW_USER = false
 
 
 extension UIViewController {
@@ -19,6 +21,14 @@ extension UIViewController {
     
     func dismissKeyboard() {
         view.endEditing(true)
+    }
+}
+
+func loginFirebaseUser(email: String, password: String){
+    FIRAuth.auth()!.signIn(withEmail: email, password: password) { (user, error) in
+        //enable watch and record buttons
+        if user != nil {
+        }
     }
 }
 

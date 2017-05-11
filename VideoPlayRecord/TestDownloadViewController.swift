@@ -19,8 +19,8 @@ class TestDownloadViewController : UIViewController {
         super.viewDidLoad()
         
         // Hard-coded names for the tutorial bucket and the file uploaded at the beginning
-        let s3BucketName = "pieces-staging-bucket"
-        let fileName = "filter.png"
+        let s3BucketName = "pieces-video-bucket"
+        let fileName = "test.png"
         
         let downloadFilePath = NSTemporaryDirectory().appending(fileName);
         //let downloadFilePath = NSTemporaryDirectory().stringByAppendingPathComponent(fileName)
@@ -39,6 +39,8 @@ class TestDownloadViewController : UIViewController {
         downloadRequest?.downloadingFileURL = downloadingFileURL
         
         let transferManager = AWSS3TransferManager.default()
+        print("Testing download :::::::::::::::::::::::::");
+        
         transferManager.download(downloadRequest!).continueWith (block: {
             (task: AWSTask!) -> AnyObject! in
             if task.error != nil {
@@ -54,6 +56,8 @@ class TestDownloadViewController : UIViewController {
             
             return nil
         }) // end closure
+        print("after download :::::::::::::::::::::::::");
+        
     }
     
     

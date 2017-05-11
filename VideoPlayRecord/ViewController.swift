@@ -23,7 +23,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var logOutButton: UIButton!
     
-    //let usersRef = FIRDatabase.database().reference(withPath: "online")
+    //move this to tab view?
+    let usersRef = FIRDatabase.database().reference(withPath: "online")
     
     var spotifyLoggin = true //TODO
     var SPTUserLabel : UILabel!
@@ -39,7 +40,7 @@ class ViewController: UIViewController {
             }
         }
         else {
-            self.logOutButton.isHidden = true;
+            self.logOutButton.isHidden = false;
         }
         
     }
@@ -54,6 +55,11 @@ class ViewController: UIViewController {
             Current_User = User(authData: FIRAuth.auth()!.currentUser!);
             //user is logged in - don't show login and signup buttons
             self.userIdLabel.text = Current_User.email;
+            if (Spotify_Auth == nil) {
+                print("\n");
+                print("Spotify Auth is nil in View Controller");
+                print("_______________________________________");
+            }
             
         }
         else {
@@ -61,8 +67,8 @@ class ViewController: UIViewController {
             signUpButton.isHidden = false
             //watchButton.isHidden = true
             //recordButton.isHidden = true
-            watchButton.isEnabled = false
-            recordButton.isEnabled = false
+            //watchButton.isEnabled = false
+            //recordButton.isEnabled = false
             
             DispatchQueue.main.async {
                 self.logOutButton.isHidden = true;
@@ -75,7 +81,7 @@ class ViewController: UIViewController {
             if user != nil {
                 Current_User = User(authData: user!)
                 self.userIdLabel.text = Current_User.email;
-                
+                //self.performSegue(withIdentifier: "LoggedInSegue", sender: self);
                 DispatchQueue.main.async {
                     self.logOutButton.isHidden = false;
                 }
@@ -84,6 +90,7 @@ class ViewController: UIViewController {
         
         if spotifyLoggin == true {
             //self.addSpotifyView(width:width, height: height);
+            //self.performSegue(withIdentifier: "LoggedInSegue", sender: self);
         }
         
         //DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -112,6 +119,7 @@ class ViewController: UIViewController {
     
     @IBAction func logoutPressed(_ sender: Any) {
         try! FIRAuth.auth()!.signOut()
+        Current_User = nil;
         
         DispatchQueue.main.async {
             self.recordButton.isHidden = true;
@@ -122,6 +130,9 @@ class ViewController: UIViewController {
         }
         Current_User = nil;
         self.userIdLabel.text = "Logged Out"
+        
+    }
+    @IBAction func loginTestUserPressed(_ sender: Any) {
         
     }
     

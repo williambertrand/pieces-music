@@ -30,3 +30,6 @@ struct User {
 
 var Current_User: User!
 var Spotify_Auth : SPTAuth!
+
+
+var Current_Services : [String] = [String]()

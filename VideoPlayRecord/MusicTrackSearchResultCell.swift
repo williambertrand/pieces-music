@@ -18,6 +18,8 @@ class MusicTrackSearchResultCell: UITableViewCell {
     
     var lineView = UIView()
     
+    var sampleButton = UIButton()
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder);
     }
@@ -31,26 +33,34 @@ class MusicTrackSearchResultCell: UITableViewCell {
         self.contentView.addSubview(trackLabel);
         self.contentView.addSubview(lineView);
         self.contentView.addSubview(artistLabel);
+        self.contentView.addSubview(sampleButton);
         
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.iconView.frame = CGRect(x: self.contentView.frame.width * 0.03, y: self.contentView.frame.height * 0.3, width: self.contentView.frame.width * 0.15, height: self.contentView.frame.height * 0.4);
+        self.iconView.frame = CGRect(x: self.contentView.frame.width * 0.03, y: self.contentView.frame.height * 0.2, width: self.contentView.frame.width * 0.15, height: self.contentView.frame.height * 0.25);
         
         iconView.contentMode = .scaleAspectFit;
         iconView.image = UIImage(named: "track-icon");
         
         self.trackLabel.frame = CGRect(x: self.contentView.frame.width * 0.22, y: self.contentView.frame.height * 0.1, width: self.contentView.frame.width * 0.78, height: self.contentView.frame.height * 0.5);
-        self.trackLabel.font = UIFont(name: "Helvetica", size: 14);
+        self.trackLabel.font = UIFont(name: "Helvetica", size: 15);
         self.trackLabel.textAlignment = .left;
         self.trackLabel.textColor = UIColor.darkGray;
         
         self.artistLabel.frame = CGRect(x: self.contentView.frame.width * 0.22, y: self.contentView.frame.height * 0.6, width: self.contentView.frame.width * 0.78, height: self.contentView.frame.height * 0.4);
-        self.artistLabel.font = UIFont(name: "Helvetica", size: 12);
+        self.artistLabel.font = UIFont(name: "Helvetica", size: 13);
         self.artistLabel.textAlignment = .left;
         self.artistLabel.textColor = UIColor.darkGray;
+        
+        //add sample button with play icon
+        self.sampleButton.frame = CGRect(x: self.contentView.frame.width * 0.8, y: self.contentView.frame.height * 0.2, width: self.contentView.frame.width * 0.15, height: self.contentView.frame.height * 0.25);
+        self.sampleButton.setImage(UIImage(named:"play-icon-filled"), for: []);
+        self.sampleButton.contentMode = .scaleAspectFit;
+        
+        
         
         //add bottom seperator
         lineView.frame = CGRect(x: 0, y: self.contentView.frame.height - 1, width: self.contentView.frame.width, height: 1);
@@ -65,8 +75,6 @@ class MusicTrackSearchResultCell: UITableViewCell {
     func addArtistNamesToCell(artists: [URL]){
         if artists.count == 0 { return; }
         
-        print("Performing request for \(artists.first!) ...")
-        
         let artistReq = try! SPTArtist.createRequest(forArtists: artists, withAccessToken: Spotify_Auth.session.accessToken); //TODO try without
         
         let task = URLSession.shared.dataTask(with: artistReq) {data, response, error in
@@ -79,24 +87,25 @@ class MusicTrackSearchResultCell: UITableViewCell {
                 return;
             }
             
-            let json = try! SPTArtist.artists(from: data, with: response);
-            
-            print("Result: \(json)");
-            
-            let artistList = json as! [SPTArtist]
-            if self.artistLabel.text == nil {
-                self.artistLabel.text = "";
-            }
-            if artistList.count > 1 {
-                for artist in artistList {
-                    self.artistLabel.text = "\(self.artistLabel.text!) \(artist.name!)"
+            do {
+                let json = try SPTArtist.artists(from: data, with: response);
+                let artistList = json as! [SPTArtist]
+                if self.artistLabel.text == nil {
+                    self.artistLabel.text = "";
                 }
+                if artistList.count > 1 {
+                    for artist in artistList {
+                        self.artistLabel.text = "\(self.artistLabel.text!) \(artist.name!)"
+                    }
+                }
+                else {
+                    self.artistLabel.text = "\(artistList.first!.name!)";
+                }
+                
             }
-            else {
-                self.artistLabel.text = "\(artistList.first!.name!)";
+            catch _ {
+                
             }
-            
-            
             
         }
         task.resume();

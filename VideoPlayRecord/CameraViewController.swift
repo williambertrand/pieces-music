@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import AVFoundation
 import AssetsLibrary
+import Firebase
 
 class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDelegate, TransferDelegateViewController {
     
@@ -19,6 +20,9 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
     var captureVideoPreviewLayer : AVCaptureVideoPreviewLayer? = nil
     
     var is_recording : Bool = false
+    
+    
+    let CAMERA_TO_SONG = "cameraViewToSongViewSegue"
     
     
     var record_button : UIButton!
@@ -34,16 +38,43 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
     @IBOutlet var cameraView: UIView!
     
     var transferDelegate : TransferDelegate!
+    var currentPieceObj: PieceObj!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated);
+        //self.setTabBarVisible(visible: true, animated: true)
+        
+        if(NEW_USER == true){
+            self.showNewUserView()
+        }
+        
+        if(Current_User != nil){
+            self.currentPieceObj = PieceObj(user: Current_User.uid);
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        //self.navigationController?.setNavigationBarHidden(true, animated: false)
         transferDelegate = TransferDelegate()
         transferDelegate.delegate = self
-        transferDelegate.user_id = "testUser1000";
+        transferDelegate.user_id = "testUser1000"; //TODO
+        
+        if(FIRAuth.auth()!.currentUser == nil){
+            //need to log in
+            //present login view
+        }
+        else {
+            Current_User = User(authData: FIRAuth.auth()!.currentUser!);
+        }
+        //self.addBackButton(width: self.view.frame.width, height: self.view.frame.height);
         // Do any additional setup after loading the view.
         //self.addRecordButton(width: self.view.frame.width, height: self.view.frame.height);
         self.setupCapture()
+        
+        self.checkForUserSignedIn()
+        
     }
     
     func addRecordButton(width: CGFloat, height: CGFloat){
@@ -55,7 +86,7 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
     }
     
     func addRecordLabel(width: CGFloat, height: CGFloat){
-        let recLabelFrame = CGRect(x: width * 0.1, y: height * 0.85, width: width * 0.8, height: height * 0.15);
+        let recLabelFrame = CGRect(x: width * 0.1, y: height * 0.82, width: width * 0.8, height: height * 0.15);
         record_label = UILabel(frame: recLabelFrame);
         record_label.text = "Tap To Record"
         record_label.textColor = UIColor.white
@@ -64,6 +95,23 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
         self.view.addSubview(record_label);
         
         
+    }
+    
+    func addBackButton(width: CGFloat, height: CGFloat){
+        let backbuttonFrame = CGRect(x: width * 0.05, y: height * 0.075, width: width * 0.15, height: height * 0.05);
+        let back_button = UIButton(frame: backbuttonFrame);
+        back_button.setTitle("back", for: []);
+        back_button.setTitleColor(UIColor.white, for: []);
+        back_button.setTitleShadowColor(UIColor.darkGray, for: []);
+        back_button.addTarget(self, action: #selector(CameraViewController.back), for: .touchUpInside);
+        self.view.addSubview(back_button);
+    }
+    
+    func back(){
+        DispatchQueue.main.async {
+            //_ = self.navigationController?.popViewController(animated: true);
+            
+        }
     }
     
     func setupCapture(){
@@ -112,9 +160,9 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
         let start = NSDate()
         let avAsset = AVURLAsset(url: url)
         let presetsCompatible = AVAssetExportSession.exportPresets(compatibleWith: avAsset)
-        let pieceBucket = "pieces-staging-bucket";
+        let pieceBucket = "pieces-development-bucket"; //TODO: what is wrong with the stagin bucket????
         
-        if (presetsCompatible.contains(AVAssetExportPresetMediumQuality)) {
+        if (presetsCompatible.contains(AVAssetExportPreset1280x720)) {
             let exportSession = AVAssetExportSession(asset: avAsset, presetName: AVAssetExportPresetMediumQuality)
             
             let formatter = DateFormatter()
@@ -123,6 +171,11 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
             let outputFielPath = NSTemporaryDirectory().appending(filename)
             let saveUrl = NSURL.fileURL(withPath: outputFielPath)
             self.finalVideoURL = saveUrl
+            
+            //set filename for current Piece Obj
+            currentPieceObj.fileName = transferDelegate.getPieceName(userID: Current_User.uid);
+            currentPieceObj.s3Bucket = pieceBucket;
+            
             exportSession?.outputURL = saveUrl
             exportSession?.shouldOptimizeForNetworkUse = true
             exportSession?.outputFileType = AVFileTypeMPEG4
@@ -132,7 +185,8 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
                     print("Compression Time: \(time)")
                     print("original File Size: \(self.getFileSize(path: url.path))")
                     print("compresed File Size: \(self.getFileSize(path: saveUrl.path))")
-                    self.transferDelegate.uploadToAws(videoPath: saveUrl.path as NSString, bucketName: pieceBucket);
+    
+                    self.transferDelegate.uploadToAws(videoPath: saveUrl.path as NSString, bucketName: pieceBucket, fileName: self.currentPieceObj.fileName);
                 }
                 
             }); //end of completion handler for export session
@@ -145,6 +199,7 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
     func getVideoDeviceWithPosition(_ position:AVCaptureDevicePosition) -> AVCaptureDevice! {
         
         let devices : [AVCaptureDevice] = AVCaptureDevice.devices() as! [AVCaptureDevice]
+        
         for device in devices {
             if device.hasMediaType(AVMediaTypeVideo){
                 if device.position == position {
@@ -162,8 +217,22 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
     func capture(_ captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAt outputFileURL: URL!, fromConnections connections: [Any]!, error: Error!) {
         self.compressRecordedVideo(url: outputFileURL);
         
-        //perform segue to the song picker view
-        self.performSegue(withIdentifier: "FromCameraToSongPick", sender: self);
+        //perform segue to the song select view
+        
+        
+        
+        
+        self.performSegue(withIdentifier:CAMERA_TO_SONG , sender: self);
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == CAMERA_TO_SONG {
+            //pass pieceObj, pass transferdelegate too....
+            let destVc = segue.destination as! SongSelectViewController
+            destVc.inPieceMakingProcess = true
+            destVc.currentPieceObject = self.currentPieceObj;
+            destVc.transferDelegate = self.transferDelegate;
+        }
     }
     
     //TODO: move to utils file
@@ -180,9 +249,52 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
         return fileSize
     }
     
+    
+    
+    //Login /Signup handling
+    
+    func checkForUserSignedIn(){
+        if (FIRAuth.auth()?.currentUser == nil) {
+            showSignInViewController()
+        }
+        else {
+            print("Logged in as: \(FIRAuth.auth()?.currentUser?.displayName ?? "nil user display name")")
+        }
+    }
+    
+    func showSignInViewController(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "LoginSignupViewControllerInstance") as! LoginSignupViewController
+        self.present(controller, animated: true, completion: nil)
+        
+    }
+    
+    
+    func showNewUserView(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "NewUserViewControllerInstance") as! NewUserViewController
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+    
+    func appendToDownloadedPieces(fileName: String, filePath: String){
+        //no need
+    }
+    func appendToDownloadedPieces(pieceObj: PieceObj) {
+        //also no need for this as of now
+    }
+    
     func appendToDownloadedItems(filePath: String) {
         //Implement when needed
     }
+    func appendToAdvertisingPieces(pieceObj: PieceObj){
+        
+    }
+    func appendToDownloadedAdvertisingPieces(fileName: String, filePath: String){
+        
+    }
+    
+    
     
     
     
@@ -201,12 +313,14 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
             self.fileUrl = NSURL.fileURL(withPath: outputFielPath)
             self.captureMovieFileOutput?.startRecording(toOutputFileURL: self.fileUrl, recordingDelegate: self)
             self.is_recording = true
+            //self.tabBarController?.tabBar.isHidden =  true;
         } else {
             self.captureMovieFileOutput?.stopRecording()
-            self.navigationController?.setNavigationBarHidden(false, animated: true)
+            //self.navigationController?.setNavigationBarHidden(false, animated: true)
             self.is_recording = false
+            //setTabBarVisible(visible: true, animated: true)
         }
-        updateLabel();
+        updateLabel()
     }
     
     func updateLabel(){
@@ -217,6 +331,44 @@ class CameraViewController : UIViewController, AVCaptureFileOutputRecordingDeleg
             self.record_label.text = "Tap to Record"
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    func setTabBarVisible(visible:Bool, animated:Bool) {
+    
+        //* This cannot be called before viewDidLayoutSubviews(), because the frame is not set before this time
+    
+        // bail if the current state matches the desired state
+        if (tabBarIsVisible() == visible) { return }
+    
+        // get a frame calculation ready
+        let frame = self.tabBarController?.tabBar.frame
+        let height = frame?.size.height
+        let offsetY = (visible ? -height! : height)
+    
+        // zero duration means no animation
+        let duration: TimeInterval = (animated ? 0.3 : 0.0)
+    
+    //  animate the tabBar
+        if frame != nil {
+            UIView.animate(withDuration: duration) {
+                self.tabBarController?.tabBar.frame = frame!.offsetBy(dx: 0, dy: offsetY!)
+                return
+            }
+        }
+    }
+    @IBAction func cancelPressed(_ sender: Any) {
+        setTabBarVisible(visible: true, animated: true)
+    }
+    
+    func tabBarIsVisible() ->Bool {
+        return (self.tabBarController?.tabBar.frame.origin.y)! < self.view.frame.maxY
+    }
+
     
     
     

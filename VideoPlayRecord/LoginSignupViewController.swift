@@ -21,18 +21,12 @@ class LoginSignupViewController: UIViewController {
     @IBOutlet weak var signupButton: UIButton!
     
     let usersOnlineRef = FIRDatabase.database().reference(withPath: "online-users")
+    let usersRef = FIRDatabase.database().reference(withPath: "user-emails")
     
     var isLoginMode: Bool!
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(true, animated: false);
-        
-        if self.isLoginMode == true {
-            self.signupButton.setTitle("Log In", for: []);
-        }
-        else {
-            self.signupButton.setTitle("Sign Up", for: []);
-        }
+        //navigationController?.setNavigationBarHidden(true, animated: false);
         
     }
     
@@ -41,6 +35,7 @@ class LoginSignupViewController: UIViewController {
         //add this line whnever a view has text input
         self.hideKeyboardWhenTappedAround()
         // Do any additional setup after loading the view, typically from a nib.
+        self.signupButton.layer.cornerRadius = 4
     }
     
     override func didReceiveMemoryWarning() {
@@ -60,7 +55,7 @@ class LoginSignupViewController: UIViewController {
         
         if !isValid(password: password) {
             //show alert
-            let alert = UIAlertController(title: "Password Invalid", message: "Password must be between 4 and 16 characters", preferredStyle: .alert);
+            let alert = UIAlertController(title: "Password Invalid", message: "Password must be between 4 and 16 characters: \(emailTextEntry.text)", preferredStyle: .alert);
             let okAction = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
                 self.passwordTextEntry.text = "";
             });
@@ -76,17 +71,17 @@ class LoginSignupViewController: UIViewController {
             present(alert, animated: true, completion: nil);
         }
         else {
+            //check for existing user
+            let emailConverted = email.replacingOccurrences(of: ".", with: "dot");
+            usersRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                if snapshot.hasChild(emailConverted){
+                    self.loginUser(email: email, password: password)
+                }
+                else {
+                    self.createNewUser(email: email, password: password);
+                }
+            })
             
-            if isLoginMode == nil {
-                print("Issue with setting login mode");
-            }
-            
-            if isLoginMode == true {
-                loginUser(email: email, password: password);
-            }
-            else {
-                createNewUser(email: email, password: password);
-            }
         }
         
     }
@@ -94,14 +89,28 @@ class LoginSignupViewController: UIViewController {
     func createNewUser (email : String, password : String) {
         FIRAuth.auth()!.createUser(withEmail: email,password: password) { user, error in
             if error == nil {
+                let date = NSDate()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "EEE, dd MMM yyyy hh:mm:ss +zzzz"
+                let nowDate = dateFormatter.string(from:date as Date)
+                //add user ref to firebase for that email
+                let emailConverted = email.replacingOccurrences(of: ".", with: "dot");
+                self.usersRef.child(emailConverted).setValue(nowDate);
+                
                 FIRAuth.auth()!.signIn(withEmail: email,password: password){ (user, error) in
                     let currentUserRef = self.usersOnlineRef.child((user?.uid)!);
                     currentUserRef.setValue(user?.email!)
                     currentUserRef.onDisconnectRemoveValue()
-                    _ = self.navigationController?.popViewController(animated: true);
+                    //segue to tab bar stuff 
+                    //self.performSegue(withIdentifier: "FromLoggedInToTabViewControllerSegue", sender: self);
+                    //_ = self.navigationController?.popViewController(animated: true);
+                    //Show a one-time: About Me view and a connect service view
+                    NEW_USER = true
+                    self.dismiss(animated: true, completion: nil);
                 }
             }
         }
+        
     }
     
     func loginUser(email: String, password: String){
@@ -113,7 +122,11 @@ class LoginSignupViewController: UIViewController {
                 currentUserRef.setValue(user?.email!)
                 currentUserRef.onDisconnectRemoveValue()
                 //go back to start view
-                _ = self.navigationController?.popViewController(animated: true);
+                //_ = self.navigationController?.popViewController(animated: true);
+                //segue to tab bar stuff
+                //self.performSegue(withIdentifier: "FromLoggedInToTabViewControllerSegue", sender: self);
+                //dismiss self
+                self.dismiss(animated: true, completion: nil);
             }
         }
     }

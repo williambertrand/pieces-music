@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="UserSearchResultCell" id="iN0-l3-epB" customClass="UserSearchResultCell" customModule="VideoPlayRecord" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="User Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95p-0A-V1c">
+                    <rect key="frame" x="131" y="283" width="235" height="39"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-profile" translatesAutoresizingMaskIntoConstraints="NO" id="2VF-Y7-3n3">
+                    <rect key="frame" x="16" y="283.5" width="107" height="100"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="38F-5E-aP5">
+                    <rect key="frame" x="131" y="364" width="235" height="20"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ppv-oi-iX1">
+                    <rect key="frame" x="131" y="323" width="235" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="95p-0A-V1c" firstAttribute="leading" secondItem="2VF-Y7-3n3" secondAttribute="trailing" constant="8" id="Fmr-xW-GZn"/>
+                <constraint firstItem="Ppv-oi-iX1" firstAttribute="leading" secondItem="2VF-Y7-3n3" secondAttribute="trailing" constant="8" id="HCe-Jd-WIl"/>
+                <constraint firstItem="95p-0A-V1c" firstAttribute="top" secondItem="2VF-Y7-3n3" secondAttribute="top" id="Ioi-1s-lHt"/>
+                <constraint firstAttribute="trailing" secondItem="Ppv-oi-iX1" secondAttribute="trailing" constant="9" id="T1c-fh-v4I"/>
+                <constraint firstAttribute="trailing" secondItem="38F-5E-aP5" secondAttribute="trailing" constant="9" id="TDd-8j-MIx"/>
+                <constraint firstItem="38F-5E-aP5" firstAttribute="leading" secondItem="2VF-Y7-3n3" secondAttribute="trailing" constant="8" id="Tkt-DG-jts"/>
+                <constraint firstAttribute="trailing" secondItem="95p-0A-V1c" secondAttribute="trailing" constant="9" id="Zj0-K4-lWq"/>
+                <constraint firstItem="2VF-Y7-3n3" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="bAK-fT-wrY"/>
+                <constraint firstItem="38F-5E-aP5" firstAttribute="bottom" secondItem="2VF-Y7-3n3" secondAttribute="bottom" id="d6p-Or-dH9"/>
+                <constraint firstItem="Ppv-oi-iX1" firstAttribute="centerY" secondItem="2VF-Y7-3n3" secondAttribute="centerY" id="gr6-tT-qGb"/>
+                <constraint firstItem="2VF-Y7-3n3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="hbm-Xf-RNF"/>
+                <constraint firstAttribute="trailing" secondItem="2VF-Y7-3n3" secondAttribute="trailing" constant="252" id="jm7-Ig-gP6"/>
+            </constraints>
+            <connections>
+                <outlet property="userEmailLabel" destination="Ppv-oi-iX1" id="KvN-cs-pNu"/>
+                <outlet property="userLocationLabel" destination="38F-5E-aP5" id="B00-jA-IHY"/>
+                <outlet property="userNameLabel" destination="95p-0A-V1c" id="g8Q-mg-opf"/>
+            </connections>
+            <point key="canvasLocation" x="-67.5" y="36.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="default-profile" width="100" height="100"/>
+    </resources>
+</document>
